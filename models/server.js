@@ -4,35 +4,22 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+    this.usuariosPath = "/api/usuarios";
 
     //rutas
     this.routes();
+
+    //middlewares
+    this.middlewares();
+  }
+
+  middlewares() {
+    //carpeta pública
+    this.app.use(express.static("public"));
   }
 
   routes() {
-    this.app.get("/", function (req, res) {
-      res.json({
-        msg: "Petición GET",
-      });
-    });
-
-    this.app.post("/", function (req, res) {
-      res.json({
-        msg: "Petición POST",
-      });
-    });
-
-    this.app.put("/", function (req, res) {
-      res.json({
-        msg: "Petición PUT",
-      });
-    });
-
-    this.app.delete("/", function (req, res) {
-      res.json({
-        msg: "Petición DELETE",
-      });
-    });
+    this.app.use(this.usuariosPath, require("../routes/usuarios"));
   }
 
   listen() {
