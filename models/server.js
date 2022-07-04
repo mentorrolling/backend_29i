@@ -6,14 +6,16 @@ class Server {
     this.port = process.env.PORT;
     this.usuariosPath = "/api/usuarios";
 
-    //rutas
-    this.routes();
-
     //middlewares
     this.middlewares();
+    //rutas
+    this.routes();
   }
 
   middlewares() {
+    //Lectura de body
+    this.app.use(express.json());
+
     //carpeta pública
     this.app.use(express.static("public"));
   }
