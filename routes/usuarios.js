@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { check } = require("express-validator");
 const {
   usuariosGet,
   usuarioPost,
@@ -9,7 +10,14 @@ const router = Router();
 
 router.get("/", usuariosGet);
 
-router.post("/", usuarioPost);
+router.post(
+  "/",
+  [
+    check("email", "El correo no es válido").isEmail(),
+    check("nombre", "El nombre es obligatorio").notEmpty(),
+  ],
+  usuarioPost
+);
 
 router.put("/:id", usuarioPut);
 

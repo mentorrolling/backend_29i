@@ -1,15 +1,22 @@
 const express = require("express"); //Importar algo en node
-
+const { dbConnection } = require("../database/config");
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
     this.usuariosPath = "/api/usuarios";
 
+    //Conexion DB
+    this.conectarDB();
+
     //middlewares
     this.middlewares();
     //rutas
     this.routes();
+  }
+
+  async conectarDB() {
+    await dbConnection();
   }
 
   middlewares() {
