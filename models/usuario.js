@@ -27,4 +27,10 @@ const UsuarioSchema = Schema({
   },
 });
 
+//Quitar datos de la respuesta json
+UsuarioSchema.methods.toJSON = function () {
+  const { __v, password, ...resto } = this.toObject();
+  return resto;
+};
+
 module.exports = model("Usuario", UsuarioSchema);
