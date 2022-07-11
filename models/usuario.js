@@ -16,7 +16,7 @@ const UsuarioSchema = Schema({
   },
   role: {
     type: String,
-    enum: ["ADMIN_ROLE", "USER_ROLE"],
+    // enum: ["ADMIN_ROLE", "USER_ROLE"],
   },
   img: {
     type: String,
