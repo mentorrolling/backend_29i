@@ -3,13 +3,23 @@ const bcrypt = require("bcryptjs");
 
 const Usuario = require("../models/usuario");
 
-const usuariosGet = (req = request, res) => {
-  const { api_key, nombre } = req.query;
+const usuariosGet = async (req = request, res) => {
+  const { limite = 5, desde = 0 } = req.query;
+  // const usuarios = await Usuario.find({ estado: true })
+  //   .skip(desde)
+  //   .limit(limite);
+
+  // const total = await Usuario.countDocuments({ estado: true });
+
+  //Hacer peticiones simultaneas
+  const [usuarios, total] = await Promise.all([
+    Usuario.find({ estado: true }).skip(desde).limit(limite),
+    Usuario.countDocuments({ estado: true }),
+  ]);
 
   res.json({
-    msg: "Petición GET - controller",
-    api_key,
-    nombre,
+    total,
+    usuarios,
   });
 };
 
@@ -51,7 +61,15 @@ const usuarioPut = async (req, res) => {
 const usuarioDelete = async (req, res) => {
   const { id } = req.params;
 
-  const usuarioBorrado = await Usuario.findByIdAndRemove(id);
+  //inactivar al usuario
+  const query = { estado: false };
+
+  const usuarioBorrado = await Usuario.findByIdAndUpdate(id, query, {
+    new: true,
+  });
+
+  //Borrar físicamente un registro
+  // const usuarioBorrado = await Usuario.findByIdAndDelete(id);
 
   res.json({
     msg: "Usuario Borrado de la BD",

@@ -18,8 +18,8 @@ const emailExiste = async (email) => {
 
 //VALIDAR ID SI EXISTE
 const existeUsuarioPorId = async (id) => {
-  const existeUsuario = await Usuario.findOne({ id });
-  console.log(existeUsuario);
+  const existeUsuario = await Usuario.findOne({ _id: id });
+
   if (!existeUsuario) {
     throw new Error(`El id ${id} no existe`);
   }
