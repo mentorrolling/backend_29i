@@ -70,6 +70,7 @@ const usuarioDelete = async (req, res) => {
 
   //Borrar físicamente un registro
   // const usuarioBorrado = await Usuario.findByIdAndDelete(id);
+  // const usuarioAutenticado = req.usuario;
 
   res.json({
     msg: "Usuario Borrado de la BD",
