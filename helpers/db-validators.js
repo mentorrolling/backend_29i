@@ -34,9 +34,18 @@ const existeBlogById = async (id) => {
   }
 };
 
+//VALIDAR EMAIL SI EXISTE
+const blogExiste = async (title) => {
+  const existeBlog = await Blog.findOne({ title });
+  if (existeBlog) {
+    throw new Error(`El título ${title} ya existe`);
+  }
+};
+
 module.exports = {
   esRoleValido,
   emailExiste,
   existeUsuarioPorId,
   existeBlogById,
+  blogExiste,
 };

@@ -17,10 +17,13 @@ const {
   usuarioPost,
   usuarioPut,
   usuarioDelete,
+  obtenerIdUsuario,
 } = require("../controllers/usuarios");
 const router = Router();
 
 router.get("/", [validarJWT, esAdminRole], usuariosGet);
+
+router.get("/validar", [validarJWT], obtenerIdUsuario);
 
 router.post(
   "/",

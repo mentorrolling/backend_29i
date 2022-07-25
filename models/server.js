@@ -8,6 +8,7 @@ class Server {
     this.usuariosPath = "/api/usuarios";
     this.authPath = "/api/auth";
     this.blogsPath = "/api/blogs";
+    this.buscarblogPath = "/api/buscarb";
 
     //Conexion DB
     this.conectarDB();
@@ -37,6 +38,7 @@ class Server {
     this.app.use(this.usuariosPath, require("../routes/usuarios"));
     this.app.use(this.authPath, require("../routes/auth"));
     this.app.use(this.blogsPath, require("../routes/blogs"));
+    this.app.use(this.buscarblogPath, require("../routes/buscar-blog"));
   }
 
   listen() {

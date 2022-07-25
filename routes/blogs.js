@@ -2,7 +2,7 @@ const { Router } = require("express");
 const { check } = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const { validarJWT } = require("../middlewares/validar-jwt");
-const { existeBlogById } = require("../helpers/db-validators");
+const { existeBlogById, blogExiste } = require("../helpers/db-validators");
 const { esAdminRole } = require("../middlewares/validar-role");
 
 const {
@@ -20,7 +20,7 @@ router.get(
   "/:id",
   [
     validarJWT,
-    check("id", "No es un ID de MOngo válido").isMongoId(),
+    check("id", "No es un ID de Mongo válido").isMongoId(),
     check("id").custom(existeBlogById),
     validarCampos,
   ],
@@ -33,6 +33,7 @@ router.post(
   [
     validarJWT,
     check("title", "El título es obligatorio").notEmpty(),
+    check("title").custom(blogExiste),
     check("body", "El cuerpo del post es obligatorio").notEmpty(),
     validarCampos,
   ],
