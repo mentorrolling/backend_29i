@@ -1,11 +1,15 @@
 const { request, response } = require("express");
+
+//Importo ObjectId para luego consultar si me manda el id del blog
 const { ObjectId } = require("mongoose").Types;
 
 const Blog = require("../models/blog");
 
+//función para buscar blog
 const buscarBlog = async (req = request, res = response) => {
-  const { search } = req.query;
+  const { search } = req.query; //Obtengo la query
 
+  //verificar si search trae un id de mongo
   const esMongoID = ObjectId.isValid(search);
   if (esMongoID) {
     const blog = await Blog.findById(search);
@@ -22,7 +26,7 @@ const buscarBlog = async (req = request, res = response) => {
     hidden: false,
   }).populate("author", "nombre");
 
-  res.json({
+  return res.json({
     results: blogs,
   });
 };
